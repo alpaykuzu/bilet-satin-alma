@@ -1,0 +1,37 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+main {
+  flex: 1;
+}
+
+.card,
+.form-control {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-dark thead {
+  background-color: #212529 !important;
+}
+
+.table-dark thead th {
+  background-color: #212529 !important;
+  color: #ffffff !important;
+}
+
+.table-dark thead a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.table-dark thead a:hover {
+  color: #dddddd !important;
+}
+.a {
+  color: #dddddd !important;
+  text-decoration: none !important;
+}
