@@ -1,32 +1,35 @@
 # 1. Temel imaj
 FROM php:8.2-apache
 
-# 2. Gerekli sistem kütüphanelerini kur
-# YENİ: libicu-dev eklendi (intl eklentisi için gerekli)
+# 2. Gerekli sistem kütüphaneleri
+# YENİ: 'dos2unix' eklendi (Windows'tan Linux'a dosya formatı dönüştürücü)
 RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     libpng-dev \
     libjpeg-dev \
-    libicu-dev \ 
+    libicu-dev \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
-# 3. Gerekli PHP eklentilerini kur
-# YENİ: intl eklentisi eklendi
+# 3. Gerekli PHP eklentileri
 RUN docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install pdo pdo_sqlite gd intl
 
-# 4. Başlangıç script'ini kopyala ve çalıştırılabilir yap
+# 4. Başlangıç script'ini kopyala
 COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# 5. Çalışma dizinini ayarla
+# 5. Script'i hem çalıştırılabilir yap HEM DE Windows formatından Linux formatına dönüştür
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
+    && dos2unix /usr/local/bin/docker-entrypoint.sh
+
+# 6. Çalışma dizini
 WORKDIR /var/www/html
 
-# 6. Proje dosyalarını kopyala
+# 7. Proje dosyaları
 COPY . .
 
-# 7. Başlangıç script'ini ana komut yap
+# 8. Başlangıç script'i
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-# 8. Apache'yi başlatma komutu
+# 9. Apache komutu
 CMD ["apache2-foreground"]
