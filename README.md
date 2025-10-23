@@ -26,7 +26,7 @@ This project is fully containerized. The only prerequisite is to have **Docker**
 
 2.  **Navigate to the Project Directory**
     ```sh
-    cd bus-ticket-system
+    cd bilet-satin-alma/bus-ticket-system
     ```
 
 3.  **Build and Run the Container**
